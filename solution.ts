@@ -98,4 +98,26 @@ function getUniqueValues(
   return result;
 }
 
+type product = {
+  name: string;
+  price: number;
+  quantity: number;
+  discount?: number;
+};
 
+function calculateTotalPrice(products: product[]): number {
+  if (products.length === 0) return 0;
+
+  return products
+    .map((product) => {
+      const TotalPrice = product.price * product.quantity;
+
+      if (product.discount !== undefined) {
+        const discountAmount = (TotalPrice * product.discount) / 100;
+        return TotalPrice - discountAmount;
+      }
+
+      return TotalPrice;
+    })
+    .reduce((sum, value) => sum + value, 0);
+}
